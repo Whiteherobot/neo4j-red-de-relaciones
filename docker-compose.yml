@@ -1,0 +1,14 @@
+# Neo4j para desarrollo. Navegador en http://localhost:7474, Bolt en localhost:7687.
+services:
+  neo4j:
+    image: neo4j:5-community
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_CLAVE:-redrelaciones2026}
+    volumes:
+      - neo4j-datos:/data
+
+volumes:
+  neo4j-datos:

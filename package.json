@@ -3,6 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "semilla": "node scripts/semilla.js"
+  },
+  "devDependencies": {
+    "neo4j-driver": "^6.2.0"
   }
 }
