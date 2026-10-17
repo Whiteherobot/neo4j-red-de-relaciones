@@ -143,7 +143,29 @@ dialog::backdrop { background: #000a; }
 .nota { color: var(--suave); font-size: 13px; line-height: 1.5; }
 code { background: #2a2a2a; padding: 1px 5px; border-radius: 4px; }
 
+.rejilla { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.resultado, .ranking { margin: 6px 0 0; padding: 0; list-style: none; }
+.resultado li, .ranking li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--borde);
+    font-size: 14px;
+}
+.resultado li:last-child, .ranking li:last-child { border-bottom: none; }
+.resultado .detalle, .camino .detalle { color: var(--suave); font-size: 13px; }
+.ranking { counter-reset: puesto; }
+.ranking li::before { counter-increment: puesto; content: counter(puesto) "."; color: var(--suave); width: 22px; }
+.ranking li .nombre { flex: 1; }
+.barra { height: 6px; border-radius: 3px; background: var(--acento); }
+.camino { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 14px; }
+.camino .nodo { background: #2a2a2a; border: 1px solid #3a3a3a; padding: 4px 10px; border-radius: 999px; }
+.camino .flecha { color: var(--suave); }
+.sin-resultado { color: var(--suave); font-size: 14px; }
+
 @media (max-width: 860px) {
-    .columnas { grid-template-columns: 1fr; }
+    .columnas, .rejilla { grid-template-columns: 1fr; }
     .navbar { flex-wrap: wrap; }
 }

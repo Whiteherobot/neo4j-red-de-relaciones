@@ -6,6 +6,7 @@
     <title>FuturaCorp · Red de relaciones</title>
     <link rel="stylesheet" href="css/estilos.css">
     <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/consultas.js"></script>
 </head>
 <body>
     <header class="navbar">
@@ -13,6 +14,7 @@
         <nav>
             <a href="#personas">Personas</a>
             <a href="#relaciones">Relaciones</a>
+            <a href="#consultas">Consultas</a>
         </nav>
         <button id="boton-conexion" class="conexion" type="button">
             <span class="punto"></span><span id="estado-conexion">Modo demo</span>
@@ -82,6 +84,50 @@
                         <thead><tr><th>Persona 1</th><th>Persona 2</th><th>Tipo</th><th>Frecuencia</th><th>Importancia</th><th></th></tr></thead>
                         <tbody id="tabla-relaciones"></tbody>
                     </table>
+                </div>
+            </div>
+        </section>
+        <section class="container" id="consultas">
+            <h2>Consultas</h2>
+            <div class="rejilla">
+                <form id="consulta-relaciones" class="tarjeta">
+                    <h3>Relaciones de una persona</h3>
+                    <div class="dos">
+                        <label>Persona <select name="persona" class="selector-persona"></select></label>
+                        <label>Tipo
+                            <select name="tipo">
+                                <option value="">Todos</option>
+                                <option value="amistad">Amistad</option>
+                                <option value="familiar">Familiar</option>
+                                <option value="laboral">Laboral</option>
+                            </select>
+                        </label>
+                    </div>
+                    <ul class="resultado" id="resultado-relaciones"></ul>
+                </form>
+
+                <form id="consulta-comun" class="tarjeta">
+                    <h3>Contactos en común</h3>
+                    <div class="dos">
+                        <label>Persona 1 <select name="a" class="selector-persona"></select></label>
+                        <label>Persona 2 <select name="b" class="selector-persona"></select></label>
+                    </div>
+                    <ul class="resultado" id="resultado-comun"></ul>
+                </form>
+
+                <form id="consulta-camino" class="tarjeta">
+                    <h3>¿Cómo se conectan?</h3>
+                    <p class="nota">El camino más corto entre dos personas, en cualquier tipo de relación (hasta 6 saltos).</p>
+                    <div class="dos">
+                        <label>Desde <select name="a" class="selector-persona"></select></label>
+                        <label>Hasta <select name="b" class="selector-persona"></select></label>
+                    </div>
+                    <div class="camino" id="resultado-camino"></div>
+                </form>
+
+                <div class="tarjeta">
+                    <h3>Personas con más relaciones</h3>
+                    <ol class="ranking" id="resultado-ranking"></ol>
                 </div>
             </div>
         </section>
