@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FuturaCorp · Red de relaciones</title>
     <link rel="stylesheet" href="css/estilos.css">
+    <script type="module" src="js/grafo.js"></script>
     <script type="module" src="js/app.js"></script>
     <script type="module" src="js/consultas.js"></script>
 </head>
@@ -12,6 +13,7 @@
     <header class="navbar">
         <div class="logo">FuturaCorp <span>red de relaciones</span></div>
         <nav>
+            <a href="#grafo">Grafo</a>
             <a href="#personas">Personas</a>
             <a href="#relaciones">Relaciones</a>
             <a href="#consultas">Consultas</a>
@@ -23,6 +25,19 @@
 
     <main>
         <p id="aviso" class="aviso" role="status" hidden></p>
+
+        <section class="container" id="grafo">
+            <h2>Red</h2>
+            <div class="tarjeta lienzo">
+                <canvas id="lienzo-grafo"></canvas>
+                <div class="leyenda">
+                    <span><i class="linea amistad"></i>Amistad</span>
+                    <span><i class="linea familiar"></i>Familiar</span>
+                    <span><i class="linea laboral"></i>Laboral</span>
+                    <span class="detalle">El grosor es la importancia. Los nodos se pueden arrastrar.</span>
+                </div>
+            </div>
+        </section>
 
         <section class="container" id="personas">
             <h2>Personas</h2>

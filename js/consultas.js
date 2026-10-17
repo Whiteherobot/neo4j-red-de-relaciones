@@ -38,7 +38,7 @@ async function enComun() {
   });
 }
 
-async function camino() {
+async function camino(destacar = false) {
   const form = $('#consulta-camino').elements;
   const salida = $('#resultado-camino');
   if (!form.a.value || form.a.value === form.b.value) return sinResultado(salida, 'Elija dos personas distintas.');
@@ -53,7 +53,7 @@ async function camino() {
     const saltos = personas.length - 1;
     partes.push(el('span', `${saltos} ${saltos === 1 ? 'salto' : 'saltos'}`, { class: 'detalle' }));
     salida.replaceChildren(...partes);
-    document.dispatchEvent(new CustomEvent('camino-encontrado', { detail: personas.map((p) => p.nickname) }));
+    if (destacar) document.dispatchEvent(new CustomEvent('camino-encontrado', { detail: personas.map((p) => p.nickname) }));
   });
 }
 
@@ -87,7 +87,8 @@ function todo() {
 document.addEventListener('datos-actualizados', todo);
 $('#consulta-relaciones').addEventListener('change', relacionesDe);
 $('#consulta-comun').addEventListener('change', enComun);
-$('#consulta-camino').addEventListener('change', camino);
+// Al elegir un camino a mano se resalta en el grafo.
+$('#consulta-camino').addEventListener('change', () => camino(true));
 for (const id of ['#consulta-relaciones', '#consulta-comun', '#consulta-camino'])
   $(id).addEventListener('submit', (e) => e.preventDefault());
 
