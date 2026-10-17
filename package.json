@@ -1,0 +1,8 @@
+{
+  "name": "neo4j-red-de-relaciones",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
