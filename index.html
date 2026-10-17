@@ -3,169 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relaciones entre Personas</title>
+    <title>FuturaCorp · Red de relaciones</title>
     <link rel="stylesheet" href="css/estilos.css">
-    <script src="https://unpkg.com/neo4j-driver@4.4.3/lib/browser/neo4j-web.min.js"></script>
+    <script type="module" src="js/app.js"></script>
 </head>
 <body>
     <header class="navbar">
-        <div class="logo">FuturaCorp</div>
+        <div class="logo">FuturaCorp <span>red de relaciones</span></div>
         <nav>
-            <ul>
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#register">Registrar Persona</a></li>
-                <li><a href="#relationship">Registrar Relación</a></li>
-                <li><a href="#reports">Reportes</a></li>
-            </ul>
+            <a href="#personas">Personas</a>
+            <a href="#relaciones">Relaciones</a>
         </nav>
+        <button id="boton-conexion" class="conexion" type="button">
+            <span class="punto"></span><span id="estado-conexion">Modo demo</span>
+        </button>
     </header>
-    <div class="container" id="home">
-        <h1>Bienvenido a FuturaCorp</h1>
-    </div>
-    <div class="container" id="register">
-        <h2>Registro de Personas</h2>
-        <button class="accordion">Formulario de Registro</button>
-        <div class="panel">
-            <form id="person-form">
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name" required>
-                
-                <label for="nickname">Nickname:</label>
-                <input type="text" id="nickname" name="nickname" required>
-                
-                <label for="email">Correo:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="city">Ciudad:</label>
-                <input type="text" id="city" name="city" required>
-                
-                <label for="country">País:</label>
-                <input type="text" id="country" name="country" required>
-                
-                <button type="submit">Registrar Persona</button>
-            </form>
-        </div>
-        <button class="accordion" id="llamarpersonas">Personas Registradas</button>
-        <div class="panel" id="persons-list">
-            <table id="persons-table" class="styled-table">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Nickname</th>
-                        <th>Email</th>
-                        <th>Ciudad</th>
-                        <th>País</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Lista de personas registradas aparecerá aquí -->
-                </tbody>
-            </table>
-        </div>
-        
-        
-    </div>
 
-    <div class="container" id="relationship">
-        <h2>Registro de Relaciones</h2>
-        <button class="accordion">Formulario de Registro</button>
-        <div class="panel">
-            <form id="relationship-form">
-                <label for="person1">Persona 1:</label>
-                <select id="person1" name="person1" required>
-                    <!-- Opciones se cargarán aquí dinámicamente -->
-                </select>
-    
-                <label for="person2">Persona 2:</label>
-                <select id="person2" name="person2" required>
-                    <!-- Opciones se cargarán aquí dinámicamente -->
-                </select>
-    
-                <label for="type">Tipo:</label>
-                <select id="type" name="type" required>
-                    <option value="amistad">Amistad</option>
-                    <option value="familiar">Familiar</option>
-                    <option value="laboral">Laboral</option>
-                </select>
-    
-                <label for="frequency">Frecuencia:</label>
-                <input type="text" id="frequency" name="frequency" required>
-    
-                <label for="importance">Importancia:</label>
-                <input type="text" id="importance" name="importance" required>
-    
-                <button type="submit">Registrar Relación</button>
-            </form>
-        </div>
-        <button class="accordion" id="llamarrelaciones">Relaciones Registradas</button>
-        <div class="panel" id="relationships-list">
-            <table id="relationships-table" class="styled-table">
-                <thead>
-                    <tr>
-                        <th>Persona 1</th>
-                        <th>Persona 2</th>
-                        <th>Tipo</th>
-                        <th>Frecuencia</th>
-                        <th>Importancia</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Lista de relaciones registradas aparecerá aquí -->
-                </tbody>
-            </table>
-        </div>
-        
+    <main>
+        <p id="aviso" class="aviso" role="status" hidden></p>
 
-    </div>
+        <section class="container" id="personas">
+            <h2>Personas</h2>
+            <div class="columnas">
+                <form id="form-persona" class="tarjeta" autocomplete="off">
+                    <h3 id="titulo-persona">Registrar persona</h3>
+                    <label>Nombre <input name="nombre" required maxlength="60"></label>
+                    <label>Nickname <input name="nickname" required maxlength="20" placeholder="sin espacios"></label>
+                    <label>Correo <input name="email" type="email" required maxlength="100"></label>
+                    <div class="dos">
+                        <label>Ciudad <input name="ciudad" required maxlength="60"></label>
+                        <label>País <input name="pais" required maxlength="60"></label>
+                    </div>
+                    <div class="acciones">
+                        <button type="submit">Guardar</button>
+                        <button type="button" id="cancelar-edicion" class="secundario" hidden>Cancelar</button>
+                    </div>
+                </form>
+                <div class="tarjeta tabla">
+                    <table>
+                        <thead><tr><th>Nombre</th><th>Nickname</th><th>Correo</th><th>Ciudad</th><th>Relaciones</th><th></th></tr></thead>
+                        <tbody id="tabla-personas"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <div class="container" id="relationship-query">
-        <h2>Consultar Relaciones</h2>
-        <form id="relationship-query-form">
-            <label for="person1-query-select">Persona 1:</label>
-            <select id="person1-query-select" name="person1">
-                <!-- Opciones se cargarán aquí dinámicamente -->
-            </select>
-    
-            <label for="person2-query-select">Persona 2 (opcional):</label>
-            <select id="person2-query-select" name="person2">
-                <!-- Opciones se cargarán aquí dinámicamente -->
-            </select>
-    
-            <label for="relationship-type-query">Tipo de Relación (opcional):</label>
-            <select id="relationship-type-query" name="type">
-                <option value="">Seleccione un tipo</option>
-                <option value="amistad">Amistad</option>
-                <option value="familiar">Familiar</option>
-                <option value="laboral">Laboral</option>
-            </select>
-    
-            <button type="submit">Consultar</button>
+        <section class="container" id="relaciones">
+            <h2>Relaciones</h2>
+            <div class="columnas">
+                <form id="form-relacion" class="tarjeta">
+                    <h3>Registrar relación</h3>
+                    <label>Persona 1 <select name="desde" class="selector-persona" required></select></label>
+                    <label>Persona 2 <select name="hasta" class="selector-persona" required></select></label>
+                    <div class="dos">
+                        <label>Tipo
+                            <select name="tipo" required>
+                                <option value="amistad">Amistad</option>
+                                <option value="familiar">Familiar</option>
+                                <option value="laboral">Laboral</option>
+                            </select>
+                        </label>
+                        <label>Frecuencia
+                            <select name="frecuencia" required>
+                                <option value="diaria">Diaria</option>
+                                <option value="semanal" selected>Semanal</option>
+                                <option value="mensual">Mensual</option>
+                                <option value="ocasional">Ocasional</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label>Importancia <output id="valor-importancia">3</output>
+                        <input name="importancia" type="range" min="1" max="5" value="3">
+                    </label>
+                    <div class="acciones"><button type="submit">Registrar</button></div>
+                </form>
+                <div class="tarjeta tabla">
+                    <table>
+                        <thead><tr><th>Persona 1</th><th>Persona 2</th><th>Tipo</th><th>Frecuencia</th><th>Importancia</th><th></th></tr></thead>
+                        <tbody id="tabla-relaciones"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="dialogo-conexion">
+        <form method="dialog" id="form-conexion">
+            <h3>Conexión</h3>
+            <p class="nota">Sin conexión la página funciona en modo demo, con los datos guardados en este navegador.
+                Para usar Neo4j, levántelo con <code>docker compose up -d</code> y abra la página desde
+                <code>http://localhost</code> (un sitio https no puede conectarse a bolt://).</p>
+            <label>URL <input name="url" value="bolt://localhost:7687" required></label>
+            <div class="dos">
+                <label>Usuario <input name="usuario" value="neo4j" required></label>
+                <label>Contraseña <input name="clave" type="password" required></label>
+            </div>
+            <p id="error-conexion" class="error" hidden></p>
+            <div class="acciones">
+                <button value="conectar" id="conectar">Conectar a Neo4j</button>
+                <button value="demo" class="secundario" formnovalidate>Usar modo demo</button>
+                <button value="reiniciar" class="secundario" formnovalidate>Restablecer datos de ejemplo</button>
+            </div>
         </form>
-        <div id="query-result">
-            <!-- Resultado aparecerá aquí -->
-        </div>
-    </div>
-    
-    
-    <div class="container" id="most-relations">
-        <h2>Personas con Más Relaciones</h2>
-        <button id="show-relations">Mostrar Relaciones</button>
-        <table id="most-relations-table" class="styled-table">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Cantidad de Relaciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Lista de personas con más relaciones aparecerá aquí -->
-            </tbody>
-        </table>
-    </div>
-    
-    <script src="database.js"></script>
-    <script src="js/app.js"></script>
+    </dialog>
 </body>
 </html>
